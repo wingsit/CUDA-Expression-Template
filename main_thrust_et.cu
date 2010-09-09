@@ -1,5 +1,5 @@
-#include <algorithm>
-
+//#include <algorithm>
+#include <thrust/generate.h>
 #include "Expression_cu.hpp"
 
 int RandomNumber(){return (double)(rand() % 1000);}

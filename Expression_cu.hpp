@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <thrust/device_vector.h>
 template <typename L, typename OP, typename R>
 struct X{
   const L& l; const R& r;
@@ -18,23 +18,24 @@ struct Plus{
 };
 
 class Vector{
-  double * data; const int N_;
+  thrust::device_vector<double> data;
+  const int N_;
 public:
   Vector(int N, double val): N_(N)
   {
-    data = new double[N_];    
+    data.resize(N);
     for(int i = 0; i < N_; ++i){
       data[i] = val;
     }
   }
 
   Vector(int N):N_(N){
-    data = new double[N_];
+    data.resize(N);
   }
 
   double& operator[](int idx) const
   {
-    return *(data+idx);
+    return data[idx];
   }
 
   __host__ __device__ double give(int i ) const {return data[i];}
